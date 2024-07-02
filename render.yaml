@@ -5,5 +5,7 @@ services:
     buildCommand: npm install -g @redocly/cli
     startCommand: node server.js
     envVars:
-      NODE_ENV: production
-      PORT: 3000
+      - name: NODE_ENV
+        value: production
+      - name: PORT
+        value: 3000
