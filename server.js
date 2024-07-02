@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 console.log(`Gerando documentação para o arquivo: ${filePath}`);
 
-exec(`npx redocly preview-docs ${filePath} --port $PORT`, (err, stdout, stderr) => {
+exec(`npx redocly preview-docs ${filePath} --port ${PORT}`, (err, stdout, stderr) => {
   if (err) {
     console.error(`Erro ao gerar a documentação: ${stderr}`);
     process.exit(1);
