@@ -1,8 +1,9 @@
 services:
   - type: web
-    name: redocly-docs-service
+    name: my-web-app
     env: node
-    buildCommand: 'npm install'
-    startCommand: 'node server.js'
+    buildCommand: npm install -g @redocly/cli
+    startCommand: node server.js
     envVars:
-      NODE_ENV: 'production'
+      NODE_ENV: production
+      PORT: 3000
