@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  title: API Fictícia
+  description: Esta é a documentação de uma API fictícia com diversas funcionalidades.
+  version: 1.0.0
+  contact:
+    name: Suporte da API
+    email: suporte@api-ficticia.com
+    url: https://api-ficticia.com/suporte
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.ficticia.com/v1
+    description: Servidor de Produção
+  - url: https://sandbox.api.ficticia.com/v1
+    description: Servidor de Sandbox
+
+tags:
+  - name: Usuários
+    description: Endpoints relacionados a operações de usuários
+  - name: Produtos
+    description: Endpoints relacionados a operações de produtos
+
+paths:
+  /usuarios:
+    get:
+      tags:
+        - Usuários
+      summary: Lista todos os usuários
+      description: Retorna uma lista de todos os usuários cadastrados.
+      operationId: listarUsuarios
+      responses:
+        '200':
+          description: Lista de usuários retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usuario'
+      security:
+        - api_key: []
+
+  /usuarios/{id}:
+    get:
+      tags:
+        - Usuários
+      summary: Obter detalhes de um usuário
+      description: Retorna os detalhes de um usuário específico.
+      operationId: obterUsuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do usuário
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '404':
+          description: Usuário não encontrado
+      security:
+        - api_key: []
+
+  /produtos:
+    post:
+      tags:
+        - Produtos
+      summary: Criar um novo produto
+      description: Adiciona um novo produto ao sistema.
+      operationId: criarProduto
+      requestBody:
+        description: Dados do novo produto
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produto'
+      responses:
+        '201':
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '400':
+          description: Dados inválidos
+      security:
+        - api_key: []
+
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: X-API-KEY
+      in: header
+
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "12345"
+        nome:
+          type: string
+          example: "João da Silva"
+        email:
+          type: string
+          example: "joao.silva@example.com"
+        dataDeCadastro:
+          type: string
+          format: date-time
+          example: "2021-01-01T00:00:00Z"
+      required:
+        - id
+        - nome
+        - email
+
+    Produto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "98765"
+        nome:
+          type: string
+          example: "Produto Exemplo"
+        descricao:
+          type: string
+          example: "Uma breve descrição do produto."
+        preco:
+          type: number
+          format: float
+          example: 99.99
+      required:
+        - id
+        - nome
+        - preco
+
+externalDocs:
+  description: Documentação completa
+  url: https://api-ficticia.com/docs-completa
+
+x-tagGroups:
+  - name: Recursos Principais
+    tags:
+      - Usuários
+      - Produtos
+
+x-logo:
+  url: https://api-ficticia.com/logo.png
+  backgroundColor: "#FFFFFF"
+  altText: "Logo da API Fictícia"
+
+x-servers:
+  - url: https://dev.api-ficticia.com/v1
+    description: Servidor de Desenvolvimento
+  - url: https://staging.api-ficticia.com/v1
+    description: Servidor de Staging
