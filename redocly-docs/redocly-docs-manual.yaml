@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Documentação Manual
+  description: Uma documentação simples de uma API ficticia
+  version: 1.0.0
+
+  contact: 
+    name: Normalabs
+    email: norma.labs@gmail.com
+    url:  https://api-ficticia.com/suporte
+
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  
+servers:
+  - url: https://api-ficticia.com/v1
+    description: Servidor de Produção
+  - url: https://api-ficticia-hom.com/v1
+    description: Servidor de Homologação
+
+tags:
+  - name: Usuário
+    description: Endpoint relacionado ao serviço envolvendo usuários
+  - name: Produtos
+    description: Endpoint relacionado ao serviço envolvendo Produtos
+
+paths:
+  /usuarios:
+    post:
+      tags:
+        - Usuário
+      summary: Cadastro de um novo usuário
+      description: Realiza o cadastro de um novo usuário no banco de dados
+      operationId: cadastrarUsuario
+      responses:
+        '200':
+          description: Lista de usuários retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usuario'
+        '400':
+          description: Erro ao cadastrar um novo usuário
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioError'
+              examples:
+                example-1:
+                  value:
+                    message: "Usuário já cadastrado"
+                    status: 400
+          
+      security:
+        - authToken: []
+
+components:
+  securitySchemes:
+    authToken:
+      type: http
+      scheme: bearer
+  
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123456"
+          description: <b>Id único do Usuário</b>
+        nome: 
+          type: string
+          example: "Caio Smith da Costa Silva"
+          description: <b>Nome do Usuário</b>
+        email:
+          type: string
+          example: "teste@example.com"
+          description: <b>E-mail do Usuário</b>
+        created_at:
+          type: string
+          format: date-time
+          example: "2020-01-01T00:00:00"
+          description: <b>Data de criação do Usuário</b>
+        updated_at:
+          type: string
+          format: date-time
+          example: "2020-01-01T00:00:00"
+          description: <b>Data de atualização do Usuário</b>
+      required:
+        - id
+        - nome
+        - email
+
+    UsuarioError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: <b>Descrição do motivo do erro</b>
+        code:
+          type: string
+          description: <b>Código HTTP do erro em questão</b>
