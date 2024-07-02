@@ -33,7 +33,7 @@ exec(`npx redocly preview-docs ${filePath} --port ${PORT}`, (err, stdout, stderr
     });
   });
 
-  server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-  });
+  // server.listen(PORT, '0.0.0.0', () => {
+  //   console.log(`Servidor rodando na porta ${PORT}`);
+  // });
 });
