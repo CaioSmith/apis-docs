@@ -3,18 +3,19 @@ const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
 
-const filePath = path.join(__dirname, 'redocly-docs-manual.yaml');
+const filePath = path.join(__dirname, 'redocly-docs', 'redocly-docs-manual.yaml');
 const outputDir = path.join(__dirname, 'docs');
 const PORT = process.env.PORT || 3000;
 
 console.log(`Gerando documentação para o arquivo: ${filePath}`);
-
 
 exec(`npx redocly preview-docs ${filePath} --port ${PORT}`, (err, stdout, stderr) => {
   if (err) {
     console.error(`Erro ao gerar a documentação: ${stderr}`);
     process.exit(1);
   }
+
+  console.log(stdout);
   
   const server = http.createServer((req, res) => {
     const indexPath = path.join(outputDir, 'index.html');
