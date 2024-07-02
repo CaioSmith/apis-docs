@@ -3,7 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
 
-const filePath = path.join(__dirname, 'redocly-docs', 'redocly-docs-manual.yaml');
+const filePath = path.join(__dirname, 'redocly-docs-manual.yaml');
+console.log(filePath);
 const outputDir = path.join(__dirname, 'docs');
 const PORT = process.env.PORT || 3000;
 
